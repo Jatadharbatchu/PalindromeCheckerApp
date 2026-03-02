@@ -8,14 +8,15 @@ public class PalindromeCheck {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        if (input == null || input.isEmpty()) {
+        if (input == null || input.trim().isEmpty()) {
             System.out.println("Invalid input");
             return;
         }
 
+        // Normalize string
         input = input.toLowerCase().replaceAll("[^a-z0-9]", "");
 
-        if (isPalindrome(input, 0, input.length() - 1)) {
+        if (isPalindrome(input)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not Palindrome");
@@ -24,17 +25,19 @@ public class PalindromeCheck {
         sc.close();
     }
 
-    static boolean isPalindrome(String str, int start, int end) {
+    static boolean isPalindrome(String str) {
 
-        // Base condition
-        if (start >= end) {
-            return true;
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
         }
 
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
 }
