@@ -2,17 +2,6 @@ import java.util.Scanner;
 
 public class PalindromeCheck {
 
-    // Node definition (inside same class – no new separate class file)
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -26,9 +15,7 @@ public class PalindromeCheck {
 
         input = input.toLowerCase().replaceAll("[^a-z0-9]", "");
 
-        Node head = buildLinkedList(input);
-
-        if (isPalindrome(head)) {
+        if (isPalindrome(input, 0, input.length() - 1)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not Palindrome");
@@ -37,61 +24,17 @@ public class PalindromeCheck {
         sc.close();
     }
 
-    // Convert string to linked list
-    static Node buildLinkedList(String str) {
-        Node head = new Node(str.charAt(0));
-        Node current = head;
+    static boolean isPalindrome(String str, int start, int end) {
 
-        for (int i = 1; i < str.length(); i++) {
-            current.next = new Node(str.charAt(i));
-            current = current.next;
-        }
-
-        return head;
-    }
-
-    static boolean isPalindrome(Node head) {
-
-        if (head == null || head.next == null)
+        // Base condition
+        if (start >= end) {
             return true;
-
-        Node slow = head;
-        Node fast = head;
-
-        // Find middle using fast & slow pointer
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
 
-        // Reverse second half
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-        // Compare halves
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
 
-        return true;
-    }
-
-    // In-place reversal
-    static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-
-        while (current != null) {
-            Node nextTemp = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextTemp;
-        }
-
-        return prev;
+        return isPalindrome(str, start + 1, end - 1);
     }
 }
