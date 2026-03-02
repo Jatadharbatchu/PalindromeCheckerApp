@@ -1,4 +1,4 @@
-public class Main {
+public class palindromecheck {
     public static void main(String[] args) {
         String original = "madam";
         String reversed = "";
